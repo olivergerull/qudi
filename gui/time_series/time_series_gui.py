@@ -661,7 +661,7 @@ class TimeSeriesGui(GUIBase):
 
         left_axis_items = self._pw.items()
         if self.curves[channel] in left_axis_items:
-            self._vb.removeItem(self.curves[channel])
+            # self._vb.removeItem(self.curves[channel])     # leads to warnings in Qudi
             self._pw.removeItem(self.curves[channel])
         if self.averaged_curves[channel] in left_axis_items:
             self._vb.removeItem(self.averaged_curves[channel])

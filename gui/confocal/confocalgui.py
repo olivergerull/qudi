@@ -574,9 +574,9 @@ class ConfocalGui(GUIBase):
 
         # Create colorbars and add them at the desired place in the GUI. Add
         # also units to the colorbar.
-
-        self.xy_cb = ColorBar(self.my_colors.cmap_normed, width=100, cb_min=0, cb_max=100)
-        self.depth_cb = ColorBar(self.my_colors.cmap_normed, width=100, cb_min=0, cb_max=100)
+        # replaced cmap_normed with colormap, as cmap_normed led to black colorbars
+        self.xy_cb = ColorBar(self.my_colors.colormap, width=100, cb_min=0, cb_max=100)
+        self.depth_cb = ColorBar(self.my_colors.colormap, width=100, cb_min=0, cb_max=100)
         self._mw.xy_cb_ViewWidget.addItem(self.xy_cb)
         self._mw.xy_cb_ViewWidget.hideAxis('bottom')
         self._mw.xy_cb_ViewWidget.setLabel('left', 'Fluorescence', units='c/s')
@@ -1515,12 +1515,13 @@ class ConfocalGui(GUIBase):
                    (yMax - yMin) / (self._scanning_logic.xy_resolution - 1))
         self.xy_image.set_image_extent(((xMin - px_size[0] / 2, xMax + px_size[0] / 2),
                                         (yMin - px_size[1] / 2, yMax + px_size[1] / 2)))
-
+        # The following line makes the ROI jump to the left and down on Qudi launch when aspect ratio was fixed
         # self.put_cursor_in_xy_scan()
 
         xy_viewbox.updateAutoRange()
         xy_viewbox.updateViewRange()
-        self.update_roi_xy()
+        # The following line makes the ROI jump to the left and down on Qudi launch when aspect ratio was fixed
+        # self.update_roi_xy()
 
     def adjust_depth_window(self):
         """ Fit the visible window in the depth scan to full view.
@@ -1577,7 +1578,7 @@ class ConfocalGui(GUIBase):
 
         depth_viewbox.updateAutoRange()
         depth_viewbox.updateViewRange()
-        self.update_roi_depth()
+        # self.update_roi_depth()
 
     def save_xy_scan_data(self):
         """ Run the save routine from the logic to save the xy confocal data."""

@@ -70,7 +70,11 @@ class ColorBar(pg.GraphicsObject):
         p.setPen(pg.mkPen('k'))
         grad = pg.QtGui.QLinearGradient(width/2.0, cb_min*1.0, width/2.0, cb_max*1.0)
         for stop, color in zip(self.stops, self.colors):
-            grad.setColorAt(1.0 - stop, pg.QtGui.QColor(*[255*c for c in color]))
+            # use the following line when using cmap_normed:
+            # grad.setColorAt(1.0 - stop, pg.QtGui.QColor(*[255 * c for c in color]))
+
+            # use the following line when using colormap instead of cmap_normed:
+            grad.setColorAt(stop, pg.QtGui.QColor(*[c for c in color]))
         p.setBrush(pg.QtGui.QBrush(grad))
         if xMin is None:
             p.drawRect(pg.QtCore.QRectF(0, cb_min, width, cb_max-cb_min))

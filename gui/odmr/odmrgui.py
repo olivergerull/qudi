@@ -307,7 +307,8 @@ class ODMRGui(GUIBase):
         ########################################################################
         #                  Configuration of the Colorbar                       #
         ########################################################################
-        self.odmr_cb = ColorBar(my_colors.cmap_normed, 100, 0, 100000)
+        # replaced cmap_normed with colormap, as cmap_normed led to black colorbars
+        self.odmr_cb = ColorBar(my_colors.colormap, 100, 0, 100000)
 
         # adding colorbar to ViewWidget
         self._mw.odmr_cb_PlotWidget.addItem(self.odmr_cb)

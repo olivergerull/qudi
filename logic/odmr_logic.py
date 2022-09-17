@@ -468,6 +468,13 @@ class ODMRLogic(GenericLogic):
             self.cw_mw_frequency, \
             self.cw_mw_power, \
             mode = self._mw_device.set_cw(self.cw_mw_frequency, self.cw_mw_power)
+
+            # Switch on all PulseStreamer Outputs
+            try:
+                self._odmr_counter._pulser_device.pulse_streamer.constant(self._odmr_counter._pulser_device._all_on_state)
+            except:
+                self.log.error("The PulseStreamer outputs could not be switched to permanently on.")
+
             param_dict = {'cw_mw_frequency': self.cw_mw_frequency, 'cw_mw_power': self.cw_mw_power}
             self.sigParameterUpdated.emit(param_dict)
             if mode != 'cw':
@@ -810,7 +817,7 @@ class ODMRLogic(GenericLogic):
             # Update elapsed time/sweeps
             self.elapsed_sweeps += 1
             self.elapsed_time = time.time() - self._startTime
-            if self.elapsed_time >= self.run_time:
+            if (self.elapsed_time >= self.run_time) and self.run_time > 0:
                 self.stopRequested = True
             # Fire update signals
             self.sigOdmrElapsedTimeUpdated.emit(self.elapsed_time, self.elapsed_sweeps)

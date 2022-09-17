@@ -375,7 +375,8 @@ class PoiManagerGui(GUIBase):
         self._mw.roi_map_ViewWidget.setLabel('left', 'Y position', units='m')
         self._mw.roi_map_ViewWidget.setAspectLocked(lock=True, ratio=1.0)
         # Set up color bar
-        self.roi_cb = ColorBar(my_colors.cmap_normed, 100, 0, 100000)
+        # replaced cmap_normed with colormap, as cmap_normed led to black colorbars
+        self.roi_cb = ColorBar(my_colors.colormap, 100, 0, 100000)
         self._mw.roi_cb_ViewWidget.addItem(self.roi_cb)
         self._mw.roi_cb_ViewWidget.hideAxis('bottom')
         self._mw.roi_cb_ViewWidget.setLabel('left', 'Fluorescence', units='c/s')
